@@ -291,8 +291,15 @@ namespace application.col
         protected override void prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
         {
             base.prepareWhereClause(t_select, t_tab, t_criteria);
-			//<bucb> prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
-			//<eucb> prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
+            //<bucb> prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
+
+            Bovino criterioSelecao = (Bovino)t_criteria;
+            if (!string.IsNullOrEmpty(criterioSelecao.getNome()))
+            {
+                t_select.where().and(colunaNome(t_tab).eq(criterioSelecao.getNome()));
+            }
+
+            //<eucb> prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
         }
 
         protected override void prepareOrderClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria)  

@@ -235,6 +235,13 @@ namespace application.evt
             {
                 startTransaction();
 
+                Bovino bovinoCriterio = CreateRpo<Bovino>();
+                bovinoCriterio.setNome(this.Nome);
+
+                Bovino bovinoConsulta = CreateRpo<Bovino>();
+
+                this.RetornoConsulta = bovinoConsulta.searchList(bovinoCriterio);
+
             }
             catch (LogicaNegocioException ex)
             {

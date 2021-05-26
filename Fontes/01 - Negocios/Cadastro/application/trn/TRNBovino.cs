@@ -423,12 +423,15 @@ namespace application.trn
 		public status_t ExecConsultarBovinos()
 		{
 			var evt = GetEventByName<EvConsultarBovinos>(K_EV_NAME_ConsultarBovinos);
-			
-			//<bucb>Set ExecConsultarBovinos
-			//<eucb>Set ExecConsultarBovinos
-			
-			setStatus(exec(evt));
-			
+
+            //<bucb>Set ExecConsultarBovinos
+            //<eucb>Set ExecConsultarBovinos
+
+            evt.Nome = this.nome;
+
+            setStatus(exec(evt));
+
+            this.retornoConsulta = evt.RetornoConsulta;
 			//<bucb>Get ExecConsultarBovinos
 			//<eucb>Get ExecConsultarBovinos
 			

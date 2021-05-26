@@ -66,8 +66,22 @@ namespace Treinamento.Testes.Cadastro.application.trn
 		public void EvConsultarBovinosTest()
 		{
             var trn = new TRNBovino();
-			//<bucb> EvConsultarBovinosTest()
+            //<bucb> EvConsultarBovinosTest()
+
+
+            trn.Nome = "";
+
             trn.ExecConsultarBovinos();
+
+            if(trn.RetornoConsulta!=null && trn.RetornoConsulta.Count > 0)
+            {
+                 foreach(Bovino b in trn.RetornoConsulta)
+                {
+                    Console.WriteLine(string.Format("Nome = {0} e Brinco = {1}", b.getNome(), b.getBrinco()));
+                }
+            }
+
+
 			//<eucb> EvConsultarBovinosTest()
             Assert.IsFalse(trn.hasError());
 		}
