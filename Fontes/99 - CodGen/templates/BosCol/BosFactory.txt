@@ -1,0 +1,16 @@
+-- ----------------------------------------------------------------------------------------------------
+DELETE FROM bosfactory
+WHERE  heranca = '${name}.${base}';
+
+INSERT INTO bosfactory
+            (clid,
+             clname,
+             bos,
+             col,
+             heranca)
+VALUES      (0,
+             '${name}',
+             '${rvo_targetLib}::application.bos.${name}',
+             '${rvo_targetLib}::application.col.Col${name}',
+             '${name}.${base}'); 
+-- ----------------------------------------------------------------------------------------------------
