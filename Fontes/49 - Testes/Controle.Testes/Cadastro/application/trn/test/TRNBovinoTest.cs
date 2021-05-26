@@ -42,9 +42,13 @@ namespace Treinamento.Testes.Cadastro.application.trn
             //<bucb> EvManterBovinoTest()
 
             Bovino bovino = new Bovino();
-            bovino.setNome("leitao");
-            bovino.setBrinco("br002");
-            bovino.setSexo("macho");
+            bovino.setNome("narcus");
+            bovino.setBrinco("br004");
+            bovino.setBrincoMae("br001");
+            bovino.setBrincoPai("br002");
+            bovino.setSituacao("vendido");
+            bovino.setRaca("pura");
+            bovino.setSexo("femea");
 
             trn.Bovino = bovino;
 

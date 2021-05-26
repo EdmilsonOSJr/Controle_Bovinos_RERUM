@@ -125,34 +125,67 @@ namespace application.evt
 			// Chama validacao do pai
 			if (base.isValid()) 
 			{
-
+                
                 var trn = new TRNBovino();
-
-                string mensagem = "execução = ";
+                RTTList brincoPai, brincoMae;
 
                 if (!string.IsNullOrEmpty(bovino.getNome()) && !string.IsNullOrEmpty(bovino.getBrinco()))
                 {
 
-                    trn.Nome = bovino.getNome();
+                    trn.Brinco = bovino.getBrinco();
                     trn.ExecConsultarBovinos();
 
-                    Console.WriteLine("tamanho da consulta: "+trn.RetornoConsulta.Count);
-
-                    if (trn.RetornoConsulta.Count == 0 || trn.RetornoConsulta == null)
+                    if (!trn.RetornoConsulta.isNullOrEmpty() && trn.RetornoConsulta.Count > 0)
                     {
-                        mensagem = "deu bom.";
+                        throw new Exception("Bovino existente.");
                     }
-                    else
-                        mensagem = "Ele já existe.";
+
+
+                    if (!bovino.getBrincoPai().isNullOrEmpty())
+                    {
+                        brincoPai = brincoExiste(bovino.getBrincoPai(), trn);
+                        if(!brincoPai.isNullOrEmpty() && brincoPai.Count > 0)
+                        {
+                            foreach(Bovino b in brincoPai)
+                            {
+                                if (b.getSexo() != "macho")
+                                {
+                                    throw new Exception("Sexo do pai inválido.");
+                                }
+                            }
+                        }
+                        else
+                            throw new Exception("Pai não existe.");
+
+                    }
+
+
+                    if (!bovino.getBrincoMae().isNullOrEmpty())
+                    {
+                        brincoMae = brincoExiste(bovino.getBrincoMae(), trn);
+                        if (!brincoMae.isNullOrEmpty() && brincoMae.Count > 0)
+                        {
+                            foreach (Bovino b in brincoMae)
+                            {
+                                if (b.getSexo() != "femea")
+                                {
+                                    throw new Exception("Sexo da mãe inválido.");
+                                }
+                            }
+                        }
+                        else
+                            throw new Exception("Mãe não existe.");
+
+                    }
 
 
                 }
                 else
-                    mensagem = "campo vazio.";
+                    throw new Exception("Campos vazios.");
+                    
 
 
-
-                Console.WriteLine(mensagem);
+                Console.WriteLine("Chegou ao fim");
 
 				//<bucb>User isValid
 				//<eucb>User isValid
@@ -166,6 +199,15 @@ namespace application.evt
 			return !hasError();
 		}
 
+        private RTTList brincoExiste(string brinco, TRNBovino trn)
+        {
+            trn = new TRNBovino();
+            trn.Brinco = brinco;
+            trn.ExecConsultarBovinos();
+            return trn.RetornoConsulta;
+        }
+
+        
 		/// <summary>
 		/// Inicio de execução da evento: procedimentos de incializacao
 		/// </summary>
@@ -216,13 +258,13 @@ namespace application.evt
                 bovinoSalvar.setNome(this.Bovino.getNome());
                 bovinoSalvar.setBrinco(this.Bovino.getBrinco());
                 bovinoSalvar.setSexo(this.Bovino.getSexo());
-                bovino.setSituacao(this.Bovino.getSituacao());
-                bovino.setBrincoMae(this.Bovino.getBrincoMae()); 
-                bovino.setBrincoPai(this.Bovino.getBrincoPai());
-                bovino.setRaca(this.Bovino.getRaca());
-                bovino.setDataNascimento(this.Bovino.getDataNascimento());
-                bovino.setDataPrenches(this.Bovino.getDataPrenches());
-                bovino.setDataUltimoParto(this.Bovino.getDataUltimoParto());
+                bovinoSalvar.setSituacao(this.Bovino.getSituacao());
+                bovinoSalvar.setBrincoMae(this.Bovino.getBrincoMae());
+                bovinoSalvar.setBrincoPai(this.Bovino.getBrincoPai());
+                bovinoSalvar.setRaca(this.Bovino.getRaca());
+                bovinoSalvar.setDataNascimento(this.Bovino.getDataNascimento());
+                bovinoSalvar.setDataPrenches(this.Bovino.getDataPrenches());
+                bovinoSalvar.setDataUltimoParto(this.Bovino.getDataUltimoParto());
                 bovinoSalvar.updateByStatus();
 
 
