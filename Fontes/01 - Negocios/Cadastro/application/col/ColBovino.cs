@@ -298,6 +298,11 @@ namespace application.col
             {
                 t_select.where().and(colunaNome(t_tab).eq(criterioSelecao.getNome()));
             }
+            else
+            {
+                t_select.where().and(colunaBrinco(t_tab).eq(criterioSelecao.getBrinco()));
+            }
+
 
             //<eucb> prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
         }

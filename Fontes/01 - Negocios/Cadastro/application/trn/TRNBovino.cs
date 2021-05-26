@@ -427,7 +427,9 @@ namespace application.trn
             //<bucb>Set ExecConsultarBovinos
             //<eucb>Set ExecConsultarBovinos
 
-            evt.Nome = this.nome;
+            
+            evt.Brinco= this.brinco;
+            evt.Nome= this.nome;
 
             setStatus(exec(evt));
 

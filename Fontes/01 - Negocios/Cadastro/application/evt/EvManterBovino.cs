@@ -125,6 +125,35 @@ namespace application.evt
 			// Chama validacao do pai
 			if (base.isValid()) 
 			{
+
+                var trn = new TRNBovino();
+
+                string mensagem = "execução = ";
+
+                if (!string.IsNullOrEmpty(bovino.getNome()) && !string.IsNullOrEmpty(bovino.getBrinco()))
+                {
+
+                    trn.Nome = bovino.getNome();
+                    trn.ExecConsultarBovinos();
+
+                    Console.WriteLine("tamanho da consulta: "+trn.RetornoConsulta.Count);
+
+                    if (trn.RetornoConsulta.Count == 0 || trn.RetornoConsulta == null)
+                    {
+                        mensagem = "deu bom.";
+                    }
+                    else
+                        mensagem = "Ele já existe.";
+
+
+                }
+                else
+                    mensagem = "campo vazio.";
+
+
+
+                Console.WriteLine(mensagem);
+
 				//<bucb>User isValid
 				//<eucb>User isValid
 			}
@@ -186,6 +215,14 @@ namespace application.evt
                 Bovino bovinoSalvar = CreateRpo<Bovino>();
                 bovinoSalvar.setNome(this.Bovino.getNome());
                 bovinoSalvar.setBrinco(this.Bovino.getBrinco());
+                bovinoSalvar.setSexo(this.Bovino.getSexo());
+                bovino.setSituacao(this.Bovino.getSituacao());
+                bovino.setBrincoMae(this.Bovino.getBrincoMae()); 
+                bovino.setBrincoPai(this.Bovino.getBrincoPai());
+                bovino.setRaca(this.Bovino.getRaca());
+                bovino.setDataNascimento(this.Bovino.getDataNascimento());
+                bovino.setDataPrenches(this.Bovino.getDataPrenches());
+                bovino.setDataUltimoParto(this.Bovino.getDataUltimoParto());
                 bovinoSalvar.updateByStatus();
 
 

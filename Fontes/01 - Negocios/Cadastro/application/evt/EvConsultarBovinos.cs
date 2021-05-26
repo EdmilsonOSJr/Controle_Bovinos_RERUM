@@ -237,6 +237,7 @@ namespace application.evt
 
                 Bovino bovinoCriterio = CreateRpo<Bovino>();
                 bovinoCriterio.setNome(this.Nome);
+                bovinoCriterio.setBrinco(this.Brinco);
 
                 Bovino bovinoConsulta = CreateRpo<Bovino>();
 
