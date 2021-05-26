@@ -1,2 +1,2 @@
-C:\Projetos\ProjetoCarlos\Documentos\Técnicos\Análise\UML\Bovinos.eap
-C:\Projetos\ProjetoCarlos_Gerador
+C:\Users\Rerum\Desktop\Controle_Bovinos_RERUM\Documentos\Técnicos\Análise\UML\TreinamentoArquiteturaRerum.eap
+C:\Users\Rerum\Desktop\Controle_Bovinos_RERUM_Gerador

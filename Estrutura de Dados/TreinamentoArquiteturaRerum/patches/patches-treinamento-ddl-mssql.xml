@@ -21,6 +21,16 @@
 	<changeSet id="ddl-mn-0003" author="marcelo.nepomuceno">
 		<comment>Cria a tabela item_domain</comment>
 		<sqlFile path="${script.home}/DDL/table/create-table-item_domain.sql" />
+	</changeSet>
+	
+	<changeSet id="ddl-mn-0004" author="edmilson">
+		<comment>Cria a tabela bovino</comment>
+		<sqlFile path="${script.home}/DDL/table/create-tables-controle.sql" />
+	</changeSet>
+	
+	<changeSet id="ddl-mn-0005" author="edmilson">
+		<comment>Cria as tabelas para registro de auditoria</comment>
+		<sqlFile path="${script.home}/DDL/table/create-table-auditoria.sql" />
 	</changeSet>	
 	
 </databaseChangeLog>

@@ -1,0 +1,38 @@
+<Application>
+  <Trace>
+    <level>0</level>
+    <file>trace.txt</file>
+  </Trace>
+  <Controllers>
+
+    <CNPersistence Module="RerumCS" Class="com.rerum.rpo.CNPersistence">
+      <isDefaultManager>true</isDefaultManager>
+      <driver>com.rerum.db.PostgreSQLDriver</driver>
+      <dbname>Server=localhost;Port=5433;User Id=postgres;Password=murer;Database=ControleBovinos;</dbname>
+
+          <uid>sa</uid>
+      <pwd>murer</pwd>
+      <oidcol>COD_OBJETO</oidcol>
+      <maxconns>0</maxconns>
+      <requestTimeOut>60</requestTimeOut>
+      <dateFormat>dd/MM/yyyy</dateFormat>
+      <dateTimeFormat>dd/MM/yyyy HH:mm:ss</dateTimeFormat>
+      <booleanFormat>N</booleanFormat>
+      <SGBD>PostgreSQL</SGBD>
+      <useOid>true</useOid>
+      <dateTimeFunction>to_timestamp('{0}', 'DD/MM/YYYY HH24:MI:SS')</dateTimeFunction>
+      <dateFunction>to_timestamp('{0}', 'DD/MM/YYYY')</dateFunction>
+    </CNPersistence>
+
+    <CNTransaction Module="RerumCS" Class="com.rerum.trn.CNTransaction"></CNTransaction>
+    <CNPersistenceProxy Module="RerumCS" Class="com.rerum.rpo.CNPersistenceProxy"></CNPersistenceProxy>
+    <CNTransactionProxy Module="RerumCS" Class="com.rerum.trn.CNTransactionProxy"></CNTransactionProxy>
+    <SCPC_TR Module="RerumCS"  Class="com.rerum.comm.CommInternal"></SCPC_TR>
+    <BS Module="RerumCS"  Class="com.rerum.comm.CommInternal"></BS>
+  </Controllers>
+  <Server>
+    <Address></Address>
+    <ServerLocation>Local</ServerLocation>
+    <ServerApplication>SCPC_TR</ServerApplication>
+  </Server>
+</Application>
