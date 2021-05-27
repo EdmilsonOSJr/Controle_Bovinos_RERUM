@@ -126,6 +126,7 @@ namespace application.evt
 			if (base.isValid()) 
 			{
                 
+                /*
                 var trn = new TRNBovino();
                 RTTList brincoPai, brincoMae;
 
@@ -189,6 +190,7 @@ namespace application.evt
 
 				//<bucb>User isValid
 				//<eucb>User isValid
+            */
 			}
 			else 
 			{
@@ -253,8 +255,21 @@ namespace application.evt
             try
             {
                 startTransaction();
-
                 Bovino bovinoSalvar = CreateRpo<Bovino>();
+
+                    if (!TObjectId.isNullOID(this.bovino.getObjectId()))
+                    {
+
+                        bovinoSalvar = RefreshRpo<Bovino>(this.Bovino.getObjectId());
+                        if(bovinoSalvar !=null && !TObjectId.isNullOID(bovinoSalvar.getObjectId()))
+                        {
+
+                            BindObject(bovinoSalvar);
+                            bovinoSalvar.setWasUpdated(true);
+
+                        }
+
+                    }
                 bovinoSalvar.setNome(this.Bovino.getNome());
                 bovinoSalvar.setBrinco(this.Bovino.getBrinco());
                 bovinoSalvar.setSexo(this.Bovino.getSexo());

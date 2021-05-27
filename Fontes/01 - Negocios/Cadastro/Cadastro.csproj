@@ -63,11 +63,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="application\bos\Bovino.cs" />
-    <Compile Include="application\col\ColBovino.cs" />
+    <Compile Include="application\col\ColBovino.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="application\evt\EvConsultarBovinos.cs" />
     <Compile Include="application\evt\EvManterBovino.cs" />
     <Compile Include="application\evt\EvRecuperarBovinoPorId.cs" />
-    <Compile Include="application\trn\TRNBovino.cs" />
+    <Compile Include="application\trn\TRNBovino.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

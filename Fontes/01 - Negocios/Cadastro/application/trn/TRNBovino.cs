@@ -405,10 +405,13 @@ namespace application.trn
 		public status_t ExecRecuperarBovinoPorId()
 		{
 			var evt = GetEventByName<EvRecuperarBovinoPorId>(K_EV_NAME_RecuperarBovinoPorId);
-			
-			//<bucb>Set ExecRecuperarBovinoPorId
-			//<eucb>Set ExecRecuperarBovinoPorId
-			
+
+            //<bucb>Set ExecRecuperarBovinoPorId
+            //<eucb>Set ExecRecuperarBovinoPorId
+
+            evt.Bovino = this.bovino;
+
+
 			setStatus(exec(evt));
 			
 			//<bucb>Get ExecRecuperarBovinoPorId
