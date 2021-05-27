@@ -9,33 +9,33 @@ export class NavMenu extends Component {
 
   render() {
     return (
-      <Navbar inverse fixedTop fluid collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to={'/'}>ControleBovinos_Web</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav>
-            <LinkContainer to={'/'} exact>
-              <NavItem>
-                <Glyphicon glyph='home' /> Home
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={'/counter'}>
-              <NavItem>
-                <Glyphicon glyph='education' /> Counter
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={'/fetchdata'}>
-              <NavItem>
-                <Glyphicon glyph='th-list' /> Fetch data
-              </NavItem>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+     <Navbar inverse fixedTop fluid collapseOnSelect>
+ <Navbar.Header>
+ <Navbar.Brand>
+ <Link to={'/'}>Cadastro de Bovinos</Link>
+ </Navbar.Brand>
+ <Navbar.Toggle />
+ </Navbar.Header>
+ <Navbar.Collapse>
+ <Nav>
+ <LinkContainer to={'/'} exact>
+ <NavItem>
+ <Glyphicon glyph='home' /> Home
+ </NavItem>
+ </LinkContainer>
+ <LinkContainer to={'/listagem'}>
+ <NavItem>
+ <Glyphicon glyph='th-list' /> Listagem de Bovinos
+ </NavItem>
+ </LinkContainer>
+ <LinkContainer to={'/cadastro'}>
+ <NavItem>
+                            <Glyphicon glyph='pencil' /> Cadastro de Pessoas
+                            </NavItem>
+                    </LinkContainer>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
   }
 }

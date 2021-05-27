@@ -16,9 +16,9 @@ namespace ControleBovinos_Web.Models
         public string sexo { get; set; }
         public string situacao { get; set; }
         public string raca { get; set; }
-        public TDate dataNascimento { get; set; }
-        public TDate dataPrenches { get; set; }
-        public TDate dataUltimoParto { get; set; }
+        public DateTime dataNascimento { get; set; }
+        public DateTime dataPrenches { get; set; }
+        public DateTime dataUltimoParto { get; set; }
 
     }
 }
