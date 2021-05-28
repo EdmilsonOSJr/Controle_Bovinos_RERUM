@@ -42,7 +42,7 @@ namespace Treinamento.Testes.Cadastro.application.trn
             //<bucb> EvManterBovinoTest()
 
             Bovino bovino = new Bovino();
-            bovino.setNome("mimosa");
+            bovino.setNome("mi");
             bovino.setBrinco("br001");
             bovino.setBrincoMae("");
             bovino.setBrincoPai("");
@@ -74,7 +74,7 @@ namespace Treinamento.Testes.Cadastro.application.trn
             //<bucb> EvConsultarBovinosTest()
 
 
-            trn.Brinco = "75dd5d248f40491e81c9ee851ab4c782";
+            trn.Brinco = "br001";
 
             trn.ExecConsultarBovinos();
 

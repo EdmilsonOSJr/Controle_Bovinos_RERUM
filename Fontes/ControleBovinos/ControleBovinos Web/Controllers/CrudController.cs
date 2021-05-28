@@ -69,22 +69,27 @@ namespace ControleBovinos_Web.Controllers
 
 
         // GET: api/Crud/5
-        [HttpGet("{nome,brinco}")]
-        public BovinoModel GetByNameOrBrinco(string nome, string brinco)
+        [HttpGet("{tipo}/{valor}")]
+        public List<BovinoModel> GetByNameOrBrinco(string tipo, string valor)
         {
             InitRpoApplication();
             var trn = new application.trn.TRNBovino();
-            trn.Nome = nome;
-            trn.Brinco = brinco;
+            //throw new Exception("tipo: "+tipo+" valor: "+valor);
+            if(tipo=="brinco")
+                trn.Brinco = valor;
+            else
+                trn.Nome = valor;
             trn.ExecConsultarBovinos();
             if (trn.hasError() || trn == null)
             {
                 Console.WriteLine("Erro");
             }
-            BovinoModel bovino = new BovinoModel();
+
+            List<BovinoModel> list = new List<BovinoModel>();
             foreach (Bovino p in trn.RetornoConsulta)
             {
             
+                BovinoModel bovino = new BovinoModel();
                 bovino.cod_objeto = p.getObjectIdStr();
                 bovino.nome = p.getNome();
                 bovino.brinco = p.getBrinco();
@@ -97,16 +102,12 @@ namespace ControleBovinos_Web.Controllers
                 bovino.dataPrenches = p.getDataPrenches();
                 bovino.dataUltimoParto = p.getDataUltimoParto();
 
-                if (trn.hasError())
-                {
-                    Console.WriteLine("Erro");
-                    break;
-                }
-                break;
+
+                list.Add(bovino);
             
             }
             TerminateRpoApplication();
-            return bovino;
+            return list;
         }
 
 

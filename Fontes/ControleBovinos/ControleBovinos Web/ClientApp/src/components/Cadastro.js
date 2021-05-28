@@ -236,7 +236,7 @@ export class Cadastro extends Component {
                     className="btn"
                 >
                     Voltar
- </button>
+                </button>
             </ div>
     }
 }

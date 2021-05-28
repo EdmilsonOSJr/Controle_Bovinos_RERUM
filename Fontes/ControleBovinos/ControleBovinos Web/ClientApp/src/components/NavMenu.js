@@ -30,8 +30,13 @@ export class NavMenu extends Component {
  </LinkContainer>
  <LinkContainer to={'/cadastro'}>
  <NavItem>
-                            <Glyphicon glyph='pencil' /> Cadastro de Pessoas
+                            <Glyphicon glyph='pencil' /> Cadastro de Bovinos
                             </NavItem>
+                    </LinkContainer>
+                    <LinkContainer to={'/consulta'}>
+                        <NavItem>
+                            <Glyphicon glyph='th-list' /> Consultar Bovinos
+ </NavItem>
                     </LinkContainer>
                 </Nav>
             </Navbar.Collapse>
