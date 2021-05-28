@@ -8,6 +8,7 @@ using com.rerum.sys;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ControleBovinos_Web.Models;
+using com.rerum.rpo;
 
 namespace ControleBovinos_Web.Controllers
 {
@@ -64,6 +65,48 @@ namespace ControleBovinos_Web.Controllers
             }
             TerminateRpoApplication();
             return list;
+        }
+
+
+        // GET: api/Crud/5
+        [HttpGet("{nome,brinco}")]
+        public BovinoModel GetByNameOrBrinco(string nome, string brinco)
+        {
+            InitRpoApplication();
+            var trn = new application.trn.TRNBovino();
+            trn.Nome = nome;
+            trn.Brinco = brinco;
+            trn.ExecConsultarBovinos();
+            if (trn.hasError() || trn == null)
+            {
+                Console.WriteLine("Erro");
+            }
+            BovinoModel bovino = new BovinoModel();
+            foreach (Bovino p in trn.RetornoConsulta)
+            {
+            
+                bovino.cod_objeto = p.getObjectIdStr();
+                bovino.nome = p.getNome();
+                bovino.brinco = p.getBrinco();
+                bovino.brincoPai = p.getBrincoPai();
+                bovino.brincoMae = p.getBrincoMae();
+                bovino.sexo = p.getSexo();
+                bovino.situacao = p.getSituacao();
+                bovino.raca = p.getRaca();
+                bovino.dataNascimento = p.getDataNascimento();
+                bovino.dataPrenches = p.getDataPrenches();
+                bovino.dataUltimoParto = p.getDataUltimoParto();
+
+                if (trn.hasError())
+                {
+                    Console.WriteLine("Erro");
+                    break;
+                }
+                break;
+            
+            }
+            TerminateRpoApplication();
+            return bovino;
         }
 
 
@@ -138,11 +181,84 @@ namespace ControleBovinos_Web.Controllers
             newBovino.setDataPrenches(bovino.dataPrenches);
             newBovino.setDataUltimoParto(bovino.dataUltimoParto);
 
+            validacaoBovino(newBovino);
+
             trn.Bovino = newBovino;
             trn.ExecManterBovino();
             TerminateRpoApplication();
             return bovino;
         }
+
+        private void validacaoBovino(Bovino bovino)
+        {
+            var trn = new application.trn.TRNBovino();
+
+
+            if (bovino.getNome().isNullOrEmpty() || bovino.getBrinco().isNullOrEmpty())
+            {
+                throw new Exception("Bovino vazio.");
+
+
+            }
+            else
+            {
+
+                pesquisaBovino(bovino.getBrinco(), ref trn);
+                if (trn.RetornoConsulta.Count>0 && !trn.RetornoConsulta.isNullOrEmpty())
+                {
+                    throw new Exception("Bovino Existente.");
+
+                }
+            }
+
+
+
+            if (!parenteValido(bovino.getBrincoPai(),ref trn,"macho"))
+                throw new Exception("Pai Inválido.");
+
+          
+            if (!parenteValido(bovino.getBrincoMae(),ref trn,"femea"))
+                throw new Exception("Mãe Inválida.");
+
+
+        }
+
+        private bool parenteValido(string brinco, ref application.trn.TRNBovino trn, string sexo)
+        {
+
+            if (!string.IsNullOrEmpty(brinco))
+            {
+
+                pesquisaBovino(brinco, ref trn);
+                if (trn.RetornoConsulta.Count > 0 && !trn.RetornoConsulta.isNullOrEmpty())
+                {
+                    foreach (Bovino b in trn.RetornoConsulta)
+                    {
+                        if (b.getSexo() != sexo)
+                            return false;
+
+                    }
+                }
+                else
+                {
+                    return false;
+
+                }
+
+
+            }
+
+            return true;
+
+        }
+
+        private void pesquisaBovino(string brinco, ref application.trn.TRNBovino trn)
+        {
+            trn = new application.trn.TRNBovino();
+            trn.Brinco = brinco;
+            trn.ExecConsultarBovinos();
+        }
+
 
         // PUT: api/Crud/5
         [HttpPut("{id}")]
@@ -170,6 +286,13 @@ namespace ControleBovinos_Web.Controllers
                 Console.WriteLine(b.getObjectIdStr());
                 if (b.getObjectIdStr() == id)
                 {
+                    if (!parenteValido(bovino.brincoPai, ref trn, "macho"))
+                        throw new Exception("Pai Inválido.");
+
+
+                    if (!parenteValido(bovino.brincoMae, ref trn, "femea"))
+                        throw new Exception("Mãe Inválida.");
+
                     trn = new application.trn.TRNBovino();
                     trn.Bovino = b;
                     trn.Bovino.setNome(bovino.nome);
@@ -184,6 +307,8 @@ namespace ControleBovinos_Web.Controllers
                     trn.Bovino.setDataUltimoParto(bovino.dataUltimoParto);
 
                     bovino.cod_objeto = b.getObjectIdStr();
+
+
                     trn.ExecManterBovino();
                     if (trn.hasError())
                     {
