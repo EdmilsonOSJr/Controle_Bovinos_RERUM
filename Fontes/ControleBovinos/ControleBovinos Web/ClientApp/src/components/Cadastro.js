@@ -26,7 +26,9 @@ export class Cadastro extends Component {
             sexo: 'macho',
             situacao: 'Em lactacao',
             raca: 'Gitolando',
-
+            dataNascimento: '0001-01-01T00:00:00',
+            dataPrenches: '0001-01-01T00:00:00',
+            dataUltimoParto: '0001-01-01T00:00:00',
             showSuccessBlock: false
         }   
     }
@@ -130,7 +132,7 @@ export class Cadastro extends Component {
         api.post('Crud', obj)
             .then(response => {
                 this.setState({ showSuccessBlock: true })
-            }).then(window.location.reload(true))
+            })
             .catch(err => { console.log(err) })
 
         this.setState({

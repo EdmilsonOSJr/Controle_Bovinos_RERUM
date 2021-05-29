@@ -60,10 +60,6 @@ export class Consulta extends Component {
                     />
                 </div>
                
-                <td style={{ paddingLeft: 12 }}>
-                   
-                </td>
-                
                 <div style={{
                     display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems:
                         'center'

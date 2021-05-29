@@ -23,6 +23,9 @@ export class Editar extends Component {
             sexo: 'macho',
             situacao: 'Em lactacao',
             raca: 'Gitolando',
+            dataNascimento: '0001-01-01T00:00:00',
+            dataPrenches: '0001-01-01T00:00:00',
+            dataUltimoParto: '0001-01-01T00:00:00',
 
             showSuccessBlock: false
         }
@@ -31,10 +34,6 @@ export class Editar extends Component {
         api.get('Crud/' + this.props.match.params.id)
             .then(response => {
 
-                if (this.constroiData(response.data.dataPrenches) && this.constroiData(response.data.dataUltimoParto)) {
-                    dataPrenches: this.constroiData(response.data.dataPrenches);
-                    dataUltimoParto: this.constroiData(response.data.dataUltimoParto);
-                }
                 this.setState({
                     nome: response.data.nome,
                     brinco: response.data.brinco,
@@ -44,20 +43,13 @@ export class Editar extends Component {
                     situacao: response.data.situacao,
                     raca: response.data.raca,
                     dataNascimento: this.constroiData(response.data.dataNascimento),
+                    dataPrenches: this.constroiData(response.data.dataPrenches) == null ? '0001-01-01T00:00:00' : this.constroiData(response.data.dataPrenches), 
+                    dataUltimoParto: this.constroiData(response.data.dataUltimoParto) == null ? '0001-01-01T00:00:00' : this.constroiData(response.data.dataUltimoParto), 
 
 
                 });
-                if (document.getElementById("idsexo").value === "macho") {
-                    document.getElementById("dataP").setAttribute("readOnly", "readOnly");
-                    document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
+                this.mudaAtributo(document.getElementById("idsexo").value)
 
-
-                } else {
-
-                    document.getElementById("dataP").removeAttribute("readOnly");
-                    document.getElementById("dataUP").removeAttribute("readOnly");
-
-                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -73,6 +65,25 @@ export class Editar extends Component {
         var dataF = ano + '-' + mes + '-' + dia;
 
         return dataF === '0001-01-01'?null:dataF; 
+    }
+
+    mudaAtributo(valor) {
+        if (valor=== "macho") {
+            document.getElementById("dataP").setAttribute("readOnly", "readOnly");
+            document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
+            document.getElementById("dataP").removeAttribute("required");
+            document.getElementById("dataUP").removeAttribute("required");
+
+            this.state.dataPrenches = '0001-01-01T00:00:00';
+            this.state.dataUltimoParto = '0001-01-01T00:00:00';
+
+        } else {
+
+            document.getElementById("dataP").removeAttribute("readOnly");
+            document.getElementById("dataUP").removeAttribute("readOnly");
+            document.getElementById("dataP").setAttribute("required", "required");
+            document.getElementById("dataUP").setAttribute("required", "required");
+        }
     }
 
     onChangeNome(e) {
@@ -101,22 +112,7 @@ export class Editar extends Component {
             sexo: e.target.value
         })
 
-        if (e.target.value === "macho") {
-            document.getElementById("dataP").setAttribute("readOnly", "readOnly");
-            document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
-            document.getElementById("dataP").removeAttribute("required");
-            document.getElementById("dataUP").removeAttribute("required");
-
-            this.state.dataPrenches = null;
-            this.state.dataUltimoParto = null;
-
-        } else {
-
-            document.getElementById("dataP").removeAttribute("readOnly");
-            document.getElementById("dataUP").removeAttribute("readOnly");
-            document.getElementById("dataP").setAttribute("required", "required");
-            document.getElementById("dataUP").setAttribute("required", "required");
-        }
+        this.mudaAtributo(e.target.value)
 
     }
     onChangeSituacao(e) {
