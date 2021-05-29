@@ -1,7 +1,9 @@
 ﻿import React, { Component } from 'react';
 import api from '../api';
+
 export class Cadastro extends Component {
     displayName = Cadastro.name
+
     constructor(props) {
         super(props);
         this.onChangeNome = this.onChangeNome.bind(this);
@@ -12,20 +14,21 @@ export class Cadastro extends Component {
         this.onChangeSituacao = this.onChangeSituacao.bind(this);
         this.onChangeRaca = this.onChangeRaca.bind(this);
         this.onChangeDataNascimento = this.onChangeDataNascimento.bind(this);
-       
+        this.onChangeDataPrenches = this.onChangeDataPrenches.bind(this);
+        this.onChangeDataUltimoParto = this.onChangeDataUltimoParto.bind(this);
+
         this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             nome: '',
             brinco: '',
             brincoPai: '',
             brincoMae: '',
-            sexo: '',
-            situacao: '',
-            raca: '',
-            dataNascimento: '',
-            
+            sexo: 'macho',
+            situacao: 'Em lactacao',
+            raca: 'Gitolando',
+
             showSuccessBlock: false
-        }
+        }   
     }
     onChangeNome(e) {
         this.setState({
@@ -48,16 +51,28 @@ export class Cadastro extends Component {
         })
     }
     onChangeSexo(e) {
+
         this.setState({
             sexo: e.target.value
         })
 
-        if (e.target.value == "macho") {
-            document.getElementById("dataN").setAttribute("readonly", "readonly");
-            this.state.dataNascimento = '';
+        if (e.target.value === "macho") {
+            document.getElementById("dataP").setAttribute("readOnly", "readOnly");
+            document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
+            document.getElementById("dataP").removeAttribute("required");
+            document.getElementById("dataUP").removeAttribute("required");
+
+            this.state.dataPrenches = '0001-01-01T00:00:00';
+            this.state.dataUltimoParto = '0001-01-01T00:00:00';
+
+        } else {
+
+            document.getElementById("dataP").removeAttribute("readOnly");
+            document.getElementById("dataUP").removeAttribute("readOnly");
+            document.getElementById("dataP").setAttribute("required", "required");
+            document.getElementById("dataUP").setAttribute("required", "required");
         }
-        else
-            document.getElementById("dataN").removeAttribute("readonly");
+
     }
     onChangeSituacao(e) {
         this.setState({
@@ -75,7 +90,26 @@ export class Cadastro extends Component {
         this.setState({
             dataNascimento: e.target.value
         })
+        console.log(this.state.dataNascimento);
+
     }
+
+    onChangeDataPrenches(e) {
+        this.setState({
+            dataPrenches: e.target.value
+        })
+        console.log(this.state.dataPrenches);
+
+    }
+
+    onChangeDataUltimoParto(e) {
+        this.setState({
+            dataUltimoParto: e.target.value
+        })
+        console.log(this.state.dataUltimoParto);
+
+    }
+
     
 
     onSubmit(e) {
@@ -89,12 +123,14 @@ export class Cadastro extends Component {
             situacao: this.state.situacao,
             raca: this.state.raca,
             dataNascimento: this.state.dataNascimento,
-            
+            dataPrenches: this.state.dataPrenches,
+            dataUltimoParto: this.state.dataUltimoParto,
         };
+
         api.post('Crud', obj)
             .then(response => {
                 this.setState({ showSuccessBlock: true })
-            })
+            }).then(window.location.reload(true))
             .catch(err => { console.log(err) })
 
         this.setState({
@@ -105,7 +141,7 @@ export class Cadastro extends Component {
             sexo: '',
             situacao: '',
             raca: '',
-            dataNascimento: '',
+
         });
     }
     render() {
@@ -176,7 +212,7 @@ export class Cadastro extends Component {
                             value={this.state.situacao}
                             onChange={this.onChangeSituacao}>
 
-                            <option value="Em lactação">Em lactação</option>
+                            <option value="Em lactacao">Em lactação</option>
                             <option value="Seca">Seca</option>
                             <option value="Vendido">Vendido</option>
                             <option value="Morto">Morto</option>
@@ -197,15 +233,42 @@ export class Cadastro extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Data de Nascimento: </label>
+                        <label>Data Nascimento: </label>
                         <input
                             id="dataN"
                             style={{ textTransform: 'capitalize' }}
-                            type="text"
+                            type="date"
                             className="form-control"
                             value={this.state.dataNascimento}
                             onChange={this.onChangeDataNascimento}
-                            readonly="readonly"
+                            required
+                        />
+                    </div>
+
+
+                    <div className="form-group">
+                        <label>Data Prenches: </label>
+                        <input
+                            id="dataP"
+                            style={{ textTransform: 'capitalize' }}
+                            type="date"
+                            className="form-control"
+                            value={this.state.dataPrenches}
+                            onChange={this.onChangeDataPrenches}
+                            readOnly
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Data Último Parto: </label>
+                        <input
+                            id="dataUP"
+                            style={{ textTransform: 'capitalize' }}
+                            type="date"
+                            className="form-control"
+                            value={this.state.dataUltimoParto}
+                            onChange={this.onChangeDataUltimoParto}
+                            readOnly
                         />
                     </div>
 

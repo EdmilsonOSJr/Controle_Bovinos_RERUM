@@ -11,15 +11,18 @@ export class Editar extends Component {
         this.onChangeSexo = this.onChangeSexo.bind(this);
         this.onChangeSituacao = this.onChangeSituacao.bind(this);
         this.onChangeRaca = this.onChangeRaca.bind(this);
+        this.onChangeDataNascimento = this.onChangeDataNascimento.bind(this);
+        this.onChangeDataPrenches = this.onChangeDataPrenches.bind(this);
+        this.onChangeDataUltimoParto = this.onChangeDataUltimoParto.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             nome: '',
             brinco: '',
             brincoPai: '',
             brincoMae: '',
-            sexo: '',
-            situacao: '',
-            raca: '',
+            sexo: 'macho',
+            situacao: 'Em lactacao',
+            raca: 'Gitolando',
 
             showSuccessBlock: false
         }
@@ -27,6 +30,11 @@ export class Editar extends Component {
     componentDidMount() {
         api.get('Crud/' + this.props.match.params.id)
             .then(response => {
+
+                if (this.constroiData(response.data.dataPrenches) && this.constroiData(response.data.dataUltimoParto)) {
+                    dataPrenches: this.constroiData(response.data.dataPrenches);
+                    dataUltimoParto: this.constroiData(response.data.dataUltimoParto);
+                }
                 this.setState({
                     nome: response.data.nome,
                     brinco: response.data.brinco,
@@ -35,13 +43,38 @@ export class Editar extends Component {
                     sexo: response.data.sexo,
                     situacao: response.data.situacao,
                     raca: response.data.raca,
+                    dataNascimento: this.constroiData(response.data.dataNascimento),
+
+
                 });
-                console.log(response.data);
+                if (document.getElementById("idsexo").value === "macho") {
+                    document.getElementById("dataP").setAttribute("readOnly", "readOnly");
+                    document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
+
+
+                } else {
+
+                    document.getElementById("dataP").removeAttribute("readOnly");
+                    document.getElementById("dataUP").removeAttribute("readOnly");
+
+                }
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
+
+    constroiData(dataI) {
+
+        var data = new Date(dataI);
+        var dia = String(data.getDate()).padStart(2, '0');
+        var mes = String(data.getMonth() + 1).padStart(2, '0');
+        var ano = data.getFullYear();
+        var dataF = ano + '-' + mes + '-' + dia;
+
+        return dataF === '0001-01-01'?null:dataF; 
+    }
+
     onChangeNome(e) {
         this.setState({
             nome: e.target.value
@@ -63,9 +96,28 @@ export class Editar extends Component {
         })
     }
     onChangeSexo(e) {
+
         this.setState({
             sexo: e.target.value
         })
+
+        if (e.target.value === "macho") {
+            document.getElementById("dataP").setAttribute("readOnly", "readOnly");
+            document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
+            document.getElementById("dataP").removeAttribute("required");
+            document.getElementById("dataUP").removeAttribute("required");
+
+            this.state.dataPrenches = null;
+            this.state.dataUltimoParto = null;
+
+        } else {
+
+            document.getElementById("dataP").removeAttribute("readOnly");
+            document.getElementById("dataUP").removeAttribute("readOnly");
+            document.getElementById("dataP").setAttribute("required", "required");
+            document.getElementById("dataUP").setAttribute("required", "required");
+        }
+
     }
     onChangeSituacao(e) {
         this.setState({
@@ -76,7 +128,33 @@ export class Editar extends Component {
         this.setState({
             raca: e.target.value
         })
+
     }
+
+    onChangeDataNascimento(e) {
+        this.setState({
+            dataNascimento: e.target.value
+        })
+        console.log(this.state.dataNascimento);
+
+    }
+
+    onChangeDataPrenches(e) {
+        this.setState({
+            dataPrenches: e.target.value
+        })
+        console.log(this.state.dataPrenches);
+
+    }
+
+    onChangeDataUltimoParto(e) {
+        this.setState({
+            dataUltimoParto: e.target.value
+        })
+        console.log(this.state.dataUltimoParto);
+
+    }
+
 
     onSubmit(e) {
         e.preventDefault();
@@ -88,6 +166,9 @@ export class Editar extends Component {
             sexo: this.state.sexo,
             situacao: this.state.situacao,
             raca: this.state.raca,
+            dataNascimento: this.state.dataNascimento,
+            dataPrenches: this.state.dataPrenches,
+            dataUltimoParto: this.state.dataUltimoParto,
         };
         api.put('Crud/' + this.props.match.params.id, obj).then(response => {
             this.setState({ showSuccessBlock: true })
@@ -122,7 +203,7 @@ export class Editar extends Component {
                             value={this.state.brinco}
                             onChange={this.onChangeBrinco}
                             required
-                            readonly="readonly"
+                            readOnly="readonly"
                         />
                     </div>
                     <div className="form-group">
@@ -150,7 +231,8 @@ export class Editar extends Component {
                         <select style={{ textTransform: 'capitalize' }}
                             className="form-control"
                             value={this.state.sexo}
-                            onChange={this.onChangeSexo}>
+                            onChange={this.onChangeSexo}
+                            id="idsexo">
 
                             <option value="macho">Macho</option>
                             <option value="femea">Fêmea</option>
@@ -181,6 +263,44 @@ export class Editar extends Component {
                             <option value="Gir">Gir</option>
                             <option value="Jersey">Jersey</option>
                         </select>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Data Nascimento: </label>
+                        <input
+                            style={{ textTransform: 'capitalize' }}
+                            type="date"
+                            className="form-control"
+                            value={this.state.dataNascimento}
+                            onChange={this.onChangeDataNascimento}
+                            required/>
+                    </div>
+
+
+                    <div className="form-group">
+                        <label>Data Prenches: </label>
+                        <input
+                            id="dataP"
+                            style={{ textTransform: 'capitalize' }}
+                            type="date"
+                            className="form-control"
+                            value={this.state.dataPrenches}
+                            onChange={this.onChangeDataPrenches}
+                            readOnly
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Data Último Parto: </label>
+                        <input
+                            id="dataUP"
+                            style={{ textTransform: 'capitalize' }}
+                            type="date"
+                            className="form-control"
+                            value={this.state.dataUltimoParto}
+                            onChange={this.onChangeDataUltimoParto}
+                            readOnly
+                        />
                     </div>
 
 

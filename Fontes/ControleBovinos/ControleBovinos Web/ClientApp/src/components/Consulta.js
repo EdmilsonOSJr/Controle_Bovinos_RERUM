@@ -1,7 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MdEdit} from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import api from '../api';
 export class Consulta extends Component {
     displayName = Consulta.name
     constructor(props) {
@@ -9,8 +7,9 @@ export class Consulta extends Component {
         this.onChangeTipo = this.onChangeTipo.bind(this);
         this.onChangeValor = this.onChangeValor.bind(this);
 
+
         this.state = {
-            tipo: '',
+            tipo: 'nome',
             valor: '',
 
             showSuccessBlock: false
@@ -36,7 +35,7 @@ export class Consulta extends Component {
             alignItems: 'center'
         }}>
             <h3 style={{ textAlign: 'center', marginBottom: 40 }}>Consulta de Bovinos</h3>
-            <form style={{ width: '50%' }} onSubmit={this.onSubmit}>
+            <form style={{ width: '50%' }}>
 
                 <div className="form-group">
                     <label>Tipo: </label><br />
@@ -44,21 +43,20 @@ export class Consulta extends Component {
                         className="form-control"
                         value={this.state.tipo}
                         onChange={this.onChangeTipo}>
-                        <option value="">Escolha o sexo do bovino</option>
                         <option value="nome">Nome</option>
                         <option value="brinco">Brinco</option>
                     </select>
                 </div>
 
                 <div className="form-group">
-                    <label>Nome: </label>
+                    <label>Valor: </label>
                     <input
                         style={{ textTransform: 'capitalize' }}
                         type="text"
                         className="form-control"
                         value={this.state.valor}
                         onChange={this.onChangeValor}
-                        required
+                        required="required"
                     />
                 </div>
                

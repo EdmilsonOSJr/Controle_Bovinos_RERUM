@@ -78,8 +78,8 @@ export class Listar extends Component {
             : Listar.renderBovinosTable(this.state.bovinos);
         return (
             <div>
-                <h1>Listagem </h1>
-                <p>Listagem </p>
+                <h1>Listagem da consulta de bovinos </h1>
+                <br/>
                 {contents}
             </div>
         );
