@@ -7,13 +7,16 @@ export class ListagemBovinos extends Component {
     constructor(props) {
         super(props);
         this.state = { bovinos: [], loading: true }
-
         api.get('Crud')
             .then(response => {
                 this.setState({ bovinos: response.data, loading: false });
-            });
+            });
+
     }
+
+
     static renderBovinosTable(bovinos) {
+
         return (
             <table className='table'>
                 <thead>
@@ -44,9 +47,9 @@ export class ListagemBovinos extends Component {
                             <td>{bovino.sexo}</td>
                             <td>{bovino.situacao}</td>
                             <td>{bovino.raca}</td>
-                            <td>{bovino.dataNascimento}</td>
-                            <td>{bovino.dataPrenches}</td>
-                            <td>{bovino.dataUltimoParto}</td>
+                            <td>{this.constroiData(bovino.dataNascimento)}</td>
+                            <td>{this.constroiData(bovino.dataPrenches)}</td>
+                            <td>{this.constroiData(bovino.dataUltimoParto)}</td>
                             <td style={{ paddingLeft: 12 }}>
                                 <button>
                                     <Link to={"/editar/" + bovino.cod_objeto}>
@@ -70,6 +73,18 @@ export class ListagemBovinos extends Component {
             </table>
         );
     }
+
+    static constroiData(dataI) {
+
+        var data = new Date(dataI);
+        var dia = String(data.getDate()).padStart(2, '0');
+        var mes = String(data.getMonth() + 1).padStart(2, '0');
+        var ano = data.getFullYear();
+        var dataF = dia + '/' + mes + '/' + ano;
+
+        return dataF === '01/01/0001' || dataF === '01/01/1' ? "-" : dataF;
+    }
+
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
