@@ -48,7 +48,7 @@ export class Editar extends Component {
 
 
                 });
-                this.mudaAtributo(document.getElementById("idsexo").value)
+                this.modificarAtributoPorSexo(document.getElementById("idsexo").value)
 
             })
             .catch(function (error) {
@@ -67,22 +67,33 @@ export class Editar extends Component {
         return dataF === '0001-01-01'?null:dataF; 
     }
 
-    mudaAtributo(valor) {
-        if (valor=== "macho") {
-            document.getElementById("dataP").setAttribute("readOnly", "readOnly");
-            document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
-            document.getElementById("dataP").removeAttribute("required");
-            document.getElementById("dataUP").removeAttribute("required");
+    modificarAtributoPorSexo(sexo) {
 
-            this.state.dataPrenches = '0001-01-01T00:00:00';
-            this.state.dataUltimoParto = '0001-01-01T00:00:00';
+        var prenches = document.getElementById("dataP");
+        var ultimoParto = document.getElementById("dataUP");
+
+        if (sexo === "macho") {
+
+            prenches.setAttribute("readOnly", "readOnly");
+            prenches.removeAttribute("required");
+
+            ultimoParto.setAttribute("readOnly", "readOnly");
+            ultimoParto.removeAttribute("required");
+
+
+            this.setState({
+
+                dataUltimoParto: '0001-01-01T00:00:00',
+                dataPrenches: '0001-01-01T00:00:00'
+            })
 
         } else {
 
-            document.getElementById("dataP").removeAttribute("readOnly");
-            document.getElementById("dataUP").removeAttribute("readOnly");
-            document.getElementById("dataP").setAttribute("required", "required");
-            document.getElementById("dataUP").setAttribute("required", "required");
+            prenches.removeAttribute("readOnly");
+            prenches.setAttribute("required", "required");
+
+            ultimoParto.removeAttribute("readOnly");
+            ultimoParto.setAttribute("required", "required");
         }
     }
 
@@ -111,10 +122,8 @@ export class Editar extends Component {
         this.setState({
             sexo: e.target.value
         })
-
-        this.mudaAtributo(e.target.value)
-
     }
+
     onChangeSituacao(e) {
         this.setState({
             situacao: e.target.value
@@ -228,7 +237,8 @@ export class Editar extends Component {
                             className="form-control"
                             value={this.state.sexo}
                             onChange={this.onChangeSexo}
-                            id="idsexo">
+                            id="idsexo"
+                            disabled>
 
                             <option value="macho">Macho</option>
                             <option value="femea">Fêmea</option>

@@ -302,7 +302,15 @@ namespace application.col
             {
                 t_select.where().and(colunaBrinco(t_tab).eq(criterioSelecao.getBrinco()));
             }
-          
+            else if(!string.IsNullOrEmpty(criterioSelecao.getBrincoPai()))
+            {
+                t_select.where().and(colunaBrincoPai(t_tab).eq(criterioSelecao.getBrincoPai()));
+            }
+            else if (!string.IsNullOrEmpty(criterioSelecao.getBrincoMae()))
+            {
+                t_select.where().and(colunaBrincoMae(t_tab).eq(criterioSelecao.getBrincoMae()));
+            }
+
 
             //<eucb> prepareWhereClause(RDBSelector t_select, RDBTable t_tab, RPOObject t_criteria) 
         }

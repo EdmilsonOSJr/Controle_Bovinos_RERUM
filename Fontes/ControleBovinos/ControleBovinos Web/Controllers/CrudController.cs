@@ -260,6 +260,20 @@ namespace ControleBovinos_Web.Controllers
             trn.ExecConsultarBovinos();
         }
 
+        private void pesquisaBovinoPai(string brinco, ref application.trn.TRNBovino trn)
+        {
+            trn = new application.trn.TRNBovino();
+            trn.BrincoPai = brinco;
+            trn.ExecConsultarBovinos();
+        }
+
+        private void pesquisaBovinoMae(string brinco, ref application.trn.TRNBovino trn)
+        {
+            trn = new application.trn.TRNBovino();
+            trn.BrincoMae = brinco;
+            trn.ExecConsultarBovinos();
+        }
+
 
         // PUT: api/Crud/5
         [HttpPut("{id}")]
@@ -338,15 +352,29 @@ namespace ControleBovinos_Web.Controllers
             {
                 Console.WriteLine("Erro");
             }
-            foreach (Bovino p in trn.RetornoConsulta)
+            var lista = trn.RetornoConsulta;
+            foreach (Bovino p in lista)
             {
                 Console.WriteLine(p.getObjectIdStr());
                 if (p.getObjectIdStr() == id)
                 {
-                    trn = new application.trn.TRNBovino();
-                    trn.Bovino = p;
-                    trn.Bovino.delete();
-                    break;
+
+                    pesquisaBovinoPai(p.getBrinco(), ref trn);
+                    var listaPai = trn.RetornoConsulta;
+
+                    pesquisaBovinoMae(p.getBrinco(), ref trn);
+                    //throw new Exception("testando tamanho: " + trn.RetornoConsulta.Count);
+
+                    if(trn.RetornoConsulta.Count==0 && listaPai.Count==0)
+                    {
+
+                        trn = new application.trn.TRNBovino();
+                        trn.Bovino = p;
+                        trn.Bovino.delete();
+                        break;
+
+                    }
+
                 }
             }
             TerminateRpoApplication();

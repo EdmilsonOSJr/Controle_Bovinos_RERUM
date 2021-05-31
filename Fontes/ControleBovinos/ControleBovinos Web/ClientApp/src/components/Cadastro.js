@@ -54,28 +54,13 @@ export class Cadastro extends Component {
     }
     onChangeSexo(e) {
 
-        this.setState({
+        this.setState ({
             sexo: e.target.value
         })
 
-        if (e.target.value === "macho") {
-            document.getElementById("dataP").setAttribute("readOnly", "readOnly");
-            document.getElementById("dataUP").setAttribute("readOnly", "readOnly");
-            document.getElementById("dataP").removeAttribute("required");
-            document.getElementById("dataUP").removeAttribute("required");
-
-            this.state.dataPrenches = '0001-01-01T00:00:00';
-            this.state.dataUltimoParto = '0001-01-01T00:00:00';
-
-        } else {
-
-            document.getElementById("dataP").removeAttribute("readOnly");
-            document.getElementById("dataUP").removeAttribute("readOnly");
-            document.getElementById("dataP").setAttribute("required", "required");
-            document.getElementById("dataUP").setAttribute("required", "required");
-        }
-
+        this.modificarAtributoPorSexo(e.target.value);
     }
+
     onChangeSituacao(e) {
         this.setState({
             situacao: e.target.value
@@ -112,8 +97,6 @@ export class Cadastro extends Component {
 
     }
 
-    
-
     onSubmit(e) {
         e.preventDefault();
         const obj = {
@@ -140,12 +123,48 @@ export class Cadastro extends Component {
             brinco: '',
             brincoPai: '',
             brincoMae: '',
-            sexo: '',
-            situacao: '',
-            raca: '',
+            sexo: 'macho',
+            situacao: 'Em lactacao',
+            raca: 'Gitolando',
+            dataNascimento: '0001-01-01T00:00:00',
+            dataPrenches: '0001-01-01T00:00:00',
+            dataUltimoParto: '0001-01-01T00:00:00',
 
         });
     }
+
+
+    modificarAtributoPorSexo(sexo) {
+
+        var prenches = document.getElementById("dataP");
+        var ultimoParto = document.getElementById("dataUP");
+
+        if (sexo === "macho") {
+
+            prenches.setAttribute("readOnly", "readOnly");
+            prenches.removeAttribute("required");
+
+            ultimoParto.setAttribute("readOnly", "readOnly");
+            ultimoParto.removeAttribute("required");
+
+
+            this.setState({
+
+                dataUltimoParto: '0001-01-01T00:00:00',
+                dataPrenches: '0001-01-01T00:00:00'
+            })
+
+        } else {
+
+            prenches.removeAttribute("readOnly");
+            prenches.setAttribute("required", "required");
+
+            ultimoParto.removeAttribute("readOnly");
+            ultimoParto.setAttribute("required", "required");
+        }
+    }
+
+
     render() {
         return !this.state.showSuccessBlock ?
             <div style={{

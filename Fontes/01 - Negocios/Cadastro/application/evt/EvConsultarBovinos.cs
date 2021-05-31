@@ -58,6 +58,14 @@ namespace application.evt
 		/// NA
 		/// </summary>
 		private TString brinco = new TString("");
+        /// <summary>
+		/// NA
+		/// </summary>
+		private TString brincoPai = new TString("");
+        /// <summary>
+		/// NA
+		/// </summary>
+		private TString brincoMae = new TString("");
 		/// <summary>
 		/// NA
 		/// </summary>
@@ -77,6 +85,46 @@ namespace application.evt
 			//<bucb> setNome(TString value)
 			//<eucb> setNome(TString value)
 			this.nome = value;
+
+
+        }
+
+
+        public TString getBrincoMae()
+        {
+            //<bucb> getBrinco()
+            //<eucb> getBrinco()
+            return brincoMae;
+        }
+
+        public void setBrincoMae(TString value)
+        {
+            //<bucb> setBrinco(TString value)
+            //<eucb> setBrinco(TString value)
+            this.brincoMae = value;
+        }
+
+        /// <summary>
+        /// NA
+        /// </summary>
+        public TString BrincoMae
+        {
+            get { return getBrincoMae(); }
+            set { setBrincoMae(value); }
+        }
+
+        public TString getBrincoPai() 
+		{
+			//<bucb> getNome()
+			//<eucb> getNome()
+			return brincoPai;
+		}
+
+		public void setBrincoPai(TString value) 
+		{
+			//<bucb> setNome(TString value)
+			//<eucb> setNome(TString value)
+			this.brincoPai = value;
 		}
 
 		/// <summary>
@@ -87,7 +135,17 @@ namespace application.evt
 			get { return getNome(); }
 			set { setNome(value); }
 		}
-		public TString getBrinco() 
+        
+        /// <summary>
+		/// NA
+		/// </summary>
+		public TString BrincoPai 
+		{
+			get { return getBrincoPai(); }
+			set { setBrincoPai(value); }
+		}
+
+        public TString getBrinco() 
 		{
 			//<bucb> getBrinco()
 			//<eucb> getBrinco()
@@ -238,6 +296,8 @@ namespace application.evt
                 Bovino bovinoCriterio = CreateRpo<Bovino>();
                 bovinoCriterio.setNome(this.Nome);
                 bovinoCriterio.setBrinco(this.Brinco);
+                bovinoCriterio.setBrincoPai(this.BrincoPai);
+                bovinoCriterio.setBrincoMae(this.BrincoMae);
 
                 Bovino bovinoConsulta = CreateRpo<Bovino>();
 

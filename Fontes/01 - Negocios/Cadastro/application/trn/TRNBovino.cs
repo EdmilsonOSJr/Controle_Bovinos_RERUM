@@ -69,7 +69,13 @@ namespace application.trn
 		/// <summary>
 		/// NA
 		/// </summary>
-		private TString nome = new TString("");
+		private TString nome = new TString("");/// <summary>
+		/// NA
+		/// </summary>
+		private TString brincoPai = new TString("");
+        /// NA
+		/// </summary>
+		private TString brincoMae = new TString("");
 		/// <summary>
 		/// NA
 		/// </summary>
@@ -99,6 +105,20 @@ namespace application.trn
 			this.brinco = value;
 		}
 
+        public TString getBrincoPai() 
+		{
+			//<bucb> getBrinco()
+			//<eucb> getBrinco()
+			return brincoPai;
+		}
+
+		public void setBrincoPai(TString value) 
+		{
+			//<bucb> setBrinco(TString value)
+			//<eucb> setBrinco(TString value)
+			this.brincoPai = value;
+		}
+
 		/// <summary>
 		/// NA
 		/// </summary>
@@ -107,7 +127,39 @@ namespace application.trn
 			get { return getBrinco(); }
 			set { setBrinco(value); }
 		}
-		public TString getNome() 
+
+        public TString getBrincoMae() 
+		{
+			//<bucb> getBrinco()
+			//<eucb> getBrinco()
+			return brincoMae;
+		}
+
+		public void setBrincoMae(TString value) 
+		{
+			//<bucb> setBrinco(TString value)
+			//<eucb> setBrinco(TString value)
+			this.brincoMae = value;
+		}
+
+		/// <summary>
+		/// NA
+		/// </summary>
+		public TString BrincoMae 
+		{
+			get { return getBrincoMae(); }
+			set { setBrincoMae(value); }
+		}
+        /// <summary>
+		/// NA
+		/// </summary>
+		public TString BrincoPai
+		{
+			get { return getBrincoPai(); }
+			set { setBrincoPai(value); }
+		}
+
+        public TString getNome() 
 		{
 			//<bucb> getNome()
 			//<eucb> getNome()
@@ -433,6 +485,8 @@ namespace application.trn
             
             evt.Brinco= this.brinco;
             evt.Nome= this.nome;
+            evt.BrincoPai = this.brincoPai;
+            evt.BrincoMae = this.brincoMae;
 
             setStatus(exec(evt));
 
